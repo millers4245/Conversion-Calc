@@ -43,7 +43,6 @@ def number_checker(question):
         except ValueError:
             print("Please enter a valid number.")
 
-
 #Conversion type
 
 def conversion_type():
@@ -60,7 +59,6 @@ def conversion_type():
             return "mass"
         else:
             print("Please enter 'd', 't', 'm', or 'xxx' to exit.")
-
 
 # Distance
 
@@ -86,7 +84,6 @@ def distance():
     answer = f"There are {solution} {to_unit} in {amount} {from_unit}"
     return answer     
 
-
 # Mass
 
 def mass():
@@ -109,7 +106,6 @@ def mass():
 
     answer = f"There are {solution} {to_unit} in {amount} {from_unit}"
     return answer
-
 
 #Time
 
@@ -134,7 +130,6 @@ def time():
     answer = f"There are {solution} {to_unit} in {amount} {from_unit}"
     return answer
 
-
 # Main Rountine
 
 statement_generator("The Ultimate Conversion Calculator", "*")
@@ -157,4 +152,5 @@ while True:
 
     elif conversion == "time":
         print(time())
+
 

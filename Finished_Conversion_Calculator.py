@@ -1,42 +1,68 @@
+# Functions
+
 def statement_generator(statement, decoration):
     print(f"\n{decoration * 5} {statement} {decoration * 5}")
 
 
 def instructions():
     statement_generator("Instructions", "-")
-
     print('''
-Conversion 
-enter 'd' for converting distance
-enter 't' for converting time
-enter 'm' for converting mass''')
+Conversion:
+  enter 'd' for converting distance
+  enter 't' for converting time
+  enter 'm' for converting mass
 
+
+Valid Distance Units:
+  mm (millimetre)
+  cm (centimetre)
+  m  (metre)
+  km (kilometre)
+
+Valid Mass Units:
+  mg (milligrams)
+  g  (grams)
+  kg (kilograms)
+  t  (tonnes)
+
+Valid Time Units:
+  s   (seconds)
+  min (minutes)
+  h   (hours)
+  day (days)
+''')
+
+
+#Number Checker
+
+def number_checker(question):
+    while True:
+        try:
+            response = float(input(question))
+            return response
+        except ValueError:
+            print("Please enter a valid number.")
+
+
+#Conversion type
 
 def conversion_type():
-
     while True:
-        response = input("What would you like being converted: ").lower()
+        response = input("What would you like to convert? (d/t/m): ").lower()
 
-        # exit code
         if response == "xxx":
             return response
-
-        # check if it's time
-        elif response in ['t', 'time']:
-            return "time"
-
-        # check if it's distance
-        elif response in ['d', 'distance', 'length']:
+        elif response == "d":
             return "distance"
-
-        # check if it's mass
-        elif response in ["m", 'mass', 'weight']:
+        elif response == "t":
+            return "time"
+        elif response == "m":
             return "mass"
-
-        # if the response is invalid
         else:
-            print("Please enter a valid physical quantity to convert")
+            print("Please enter 'd', 't', 'm', or 'xxx' to exit.")
 
+
+# Distance
 
 def distance():
     distance_dict = {
@@ -46,24 +72,22 @@ def distance():
         "km": 0.001
     }
 
-    # get amount and units
-    amount = float(input("How much? "))
+    amount = number_checker("How much? ")
     from_unit = input("From Unit? ").lower()
     to_unit = input("To Unit? ").lower()
 
-    # Look up value
+    # Convert
     multiply_by = distance_dict[to_unit]
     standard = amount * multiply_by
 
-    # divide to get value
     divide_by = distance_dict[from_unit]
     solution = standard / divide_by
 
     answer = f"There are {solution} {to_unit} in {amount} {from_unit}"
-    print(answer)
+    return answer     
 
-    return answer
 
+# Mass
 
 def mass():
     mass_dict = {
@@ -73,59 +97,51 @@ def mass():
         "t": 0.001
     }
 
-    # get amount and units
-    amount = float(input("How much? "))
+    amount = number_checker("How much? ")
     from_unit = input("From Unit? ").lower()
     to_unit = input("To Unit? ").lower()
 
-    # Look up value for unit
     multiply_by = mass_dict[to_unit]
     standard = amount * multiply_by
 
-    # Divide to get unit
     divide_by = mass_dict[from_unit]
     solution = standard / divide_by
 
     answer = f"There are {solution} {to_unit} in {amount} {from_unit}"
-    print(answer)
-
     return answer
 
 
+#Time
+
 def time():
     time_dict = {
-        "s": 3600,     # 1 hour = 3600 seconds
-        "min": 60,     # 1 hour = 60 minutes
-        "h": 1,        # base
-        "day": 1/24    # 1 hour = 1/24 off a day
+        "s": 3600,
+        "min": 60,
+        "h": 1,
+        "day": 1/24
     }
 
-    # get amount and units (valid)
-    amount = float(input("How much? "))
+    amount = number_checker("How much? ")
     from_unit = input("From Unit? ").lower()
     to_unit = input("To Unit? ").lower()
 
-    # Look up value for unit
     multiply_by = time_dict[to_unit]
     standard = amount * multiply_by
 
-    # Divide to get unit
     divide_by = time_dict[from_unit]
     solution = standard / divide_by
 
     answer = f"There are {solution} {to_unit} in {amount} {from_unit}"
-    print(answer)
-
     return answer
 
 
-# Display instructions if requested
-want_instructions = input("Press <enter> to read the instructions  "
-                          "or any key to continue: ")
+# Main Rountine
 
+statement_generator("The Ultimate Conversion Calculator", "*")
+
+want_instructions = input("Press <enter> for instructions or any key to continue: ")
 if want_instructions == "":
     instructions()
-
 
 while True:
     conversion = conversion_type()
@@ -134,13 +150,11 @@ while True:
         break
 
     if conversion == "distance":
-        distance_ans = distance()
-        print(distance_ans)
+        print(distance())
 
     elif conversion == "mass":
-        mass_ans = mass()
-        print(mass_ans)
+        print(mass())
 
     elif conversion == "time":
-        time_ans = time()
-        print(time_ans)
+        print(time())
+
